@@ -1,0 +1,61 @@
+%title Vimwiki使用指南
+
+
+Vimwiki是一个非常好的工具，编辑文本，输出格式化的html。
+
+
+==安装==
+===从vim官方插件store下载该插件，source %，就安装好了===
+todo:ba，so
+
+===做一些配置===
+路径的设置
+
+==语法==
+===标题与列表===
+`=`之流；
+* 符号列表1
+* 符号列表2
+* 符号列表3
+
+===字体===
+*粗体文本*
+_斜体文本_
+`#include "stdio.h"`
+上标^脚本^
+下标,,脚本,,
+
+===Table===
+todo: 快捷键设置 VimwikiTable
+
+| 测试表格   | 中文似乎也ok | 混排也OK | YES | No |
+|------------+--------------+----------+-----+----|
+| 测试第一行 | 数据         |          |     |    |
+|            | ok           |          |     |    |
+|            |              |          |     |    |
+|            |              |          |     |    |
+
+===预格式化文本===
+这是python语言：
+{{{class="brush: python"
+def hello(world):
+    for x in range(10):
+        print("hello world");
+}}}
+
+==操作==
+===页面===
+打开首页 \ww \wt；跳转 shift|control + enter；返回 BackSpace
+
+
+创建一个新页面通过wikiword或者双括号；\wd \wr
+
+===折叠===
+zr zm
+
+
+todo: 快捷键更换
+
+===导出htm===
+todo: 高亮问题
+
