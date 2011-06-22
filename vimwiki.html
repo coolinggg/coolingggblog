@@ -9,6 +9,7 @@
 <script type="text/javascript" src="syntaxhighlighter/scripts/shBrushCpp.js"></script>
 <script type="text/javascript" src="syntaxhighlighter/scripts/shBrushXml.js"></script>
 <script type="text/javascript" src="syntaxhighlighter/scripts/shBrushJava.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushBash.js"></script>
 
 <script type="text/javascript">
   SyntaxHighlighter.all()
@@ -36,6 +37,25 @@ todo:ba，so
 <p>
 路径的设置
 </p>
+<pre class = "brush: bash">
+        noremap &lt;M-F8&gt; zm
+        noremap &lt;F8&gt; zr 
+        map &lt;F12&gt; :VimwikiAll2HTML&lt;cr&gt;
+        map &lt;M-F12&gt; :exec 'silent !"cmd.exe /k cd '.VimwikiGet('path_html').'" &amp; update.bat"'&lt;cr&gt;
+        let g:vimwiki_camel_case = 0
+        let g:vimwiki_menu = ''
+        let g:vimwiki_html_header_numbering = 2
+        let g:vimwiki_folding = 1
+	let g:vimwiki_use_mouse = 1
+	let g:vimwiki_list = [{
+				\"path":"e:/coolingggblog",
+				\"path_html":"e:/coolingggblog",
+				\"html_header":$VIMRUNTIME."/vimwiki/html_template/header.tpl",
+				\"html_footer":$VIMRUNTIME."/vimwiki/html_template/footer.tpl",
+                                \"nested_syntaxes": {'ASM': 'asm', 'C': 'c', 'C++': 'cpp', 'Perl': 'perl', 'Python': 'python', 'Java': 'java', 'PHP': 'php', 'HTML': 'html', 'BASH': 'sh', 'VIM': 'vim', 'MAKE': 'make'},
+				\}]
+
+</pre>
 
 <h2 id="toc_0.2">2 语法</h2>
 <h3 id="toc_0.2.1">2.1 标题与列表</h3>

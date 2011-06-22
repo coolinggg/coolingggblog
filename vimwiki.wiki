@@ -10,6 +10,25 @@ todo:ba，so
 
 ===做一些配置===
 路径的设置
+{{{class = "brush: bash"
+        noremap <M-F8> zm
+        noremap <F8> zr 
+        map <F12> :VimwikiAll2HTML<cr>
+        map <M-F12> :exec 'silent !"cmd.exe /k cd '.VimwikiGet('path_html').'" & update.bat"'<cr>
+        let g:vimwiki_camel_case = 0
+        let g:vimwiki_menu = ''
+        let g:vimwiki_html_header_numbering = 2
+        let g:vimwiki_folding = 1
+	let g:vimwiki_use_mouse = 1
+	let g:vimwiki_list = [{
+				\"path":"e:/coolingggblog",
+				\"path_html":"e:/coolingggblog",
+				\"html_header":$VIMRUNTIME."/vimwiki/html_template/header.tpl",
+				\"html_footer":$VIMRUNTIME."/vimwiki/html_template/footer.tpl",
+                                \"nested_syntaxes": {'ASM': 'asm', 'C': 'c', 'C++': 'cpp', 'Perl': 'perl', 'Python': 'python', 'Java': 'java', 'PHP': 'php', 'HTML': 'html', 'BASH': 'sh', 'VIM': 'vim', 'MAKE': 'make'},
+				\}]
+
+}}}
 
 ==语法==
 ===标题与列表===
