@@ -6,8 +6,14 @@ Vimwiki是一个非常好的工具，编辑文本，输出格式化的html。
 
 ==安装==
 ===从vim官方插件store下载该插件，source %，就安装好了===
-todo:ba，so
-
+你可以下载
+    todo:ba，so;<br /> 
+    你可以看到这是; <br />       
+    一个blockquote。<br />    
+    是的. <br />
+    这里的回车是通过S-CR实现的<br />
+    
+        
 ===做一些配置===
 路径的设置
 {{{class = "brush: bash"
@@ -77,4 +83,7 @@ todo: 快捷键更换
 
 ===导出htm===
 todo: 高亮问题
+
+==有用的链接==
+http://code.google.com/p/vim-script-cn/source/browse/trunk/doc/vimwiki.cnx
 
