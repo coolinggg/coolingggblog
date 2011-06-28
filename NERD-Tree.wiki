@@ -1,0 +1,25 @@
+%title NERD-Tree使用指南
+
+
+文件夹的树状浏览工具，非常实用。
+=使用指南=
+* 当前目录查看 :pwd
+* 修改当前目录 :cd
+
+
+* 增加书签     :Bookmark
+* 打开书签     :OpenBookmark
+* 删除书签     :ClearBookmark
+
+
+* 当前目录设为根目录   C
+* 当前目录设为pwd目录  CD
+
+
+* 配置
+
+{{{class = "brush: bash"
+    map <C-e> :NERDTreeToggle <C-R>="" <CR><br />
+    let NErDTreeBookmarksFile = "D:\360Downloads\gvimvim1.04--\NerdTreeBookmark.txt"
+}}}
+

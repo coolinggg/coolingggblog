@@ -15,66 +15,38 @@
   SyntaxHighlighter.all()
 </script> 
 <link rel="Stylesheet" type="text/css" href="style.css" />
-<title>CorlyCao's Homepage</title>
+<title>secrity</title>
 <meta http-equiv="Content-Type" content="text/html; charset=cp936" />
 </head>
 <body>
 
 
-<h1 id="toc_1"> CorlyCao的个人主页</h1>
 <p>
-这里是CorlyCao的blog，使用vim+wiki+github搭建而成。生命短暂，思想如烟。这里记录一些点点滴滴，希望你喜欢。
+手机与PC软件的第一个区别是，PC软件对权限的管理基本没有，特别是windows系列，unix系列还有root非root用户说法，文件夹有读写权限之分，然而
+手机上面对权限的控制非常重要，大体分为三层，操作系统层、java虚拟机层、应用api层
 </p>
 
-<h2 id="toc_1.1">1 时间管理与知识管理</h2>
+<h1 id="toc_1"> 手机系统的权限管理</h1>
+<h2 id="toc_1.1">1 操作系统层</h2>
 
-
-<h3 id="toc_1.1.1">1.1 知识管理</h3>
+<h2 id="toc_1.2">2 java虚拟机层</h2>
+<h3 id="toc_1.2.1">2.1 签名</h3>
 <p>
-<a href="vimwiki.html">使用vimwiki进行知识管理</a>
+每一个应用程序apk文件都要被签名，签名的作用:
+</p>
+
+<p>
+All Android applications (.apk files) must be signed with a certificate whose private key is held by their developer.
+This certificate identifies the author of the application.
+The purpose of certificates in Android is to distinguish application authors.
+</p>
+
+<p>
+This allows the system to grant or deny applications access to signature-level permissions and to grant or deny an application's request to be given the same Linux identity as another application.
 </p>
 
 
-<h3 id="toc_1.1.2">1.2 VIM</h3>
-<ul>
-<li>
-<a href="basicoper.html">基本操作</a>包括移动、选择、复制
-</li>
-<li>
-<a href="NERD-Tree.html">文件浏览之NERD-Tree</a>
-</li>
-<li>
-<a href="Tlist.html">Tag浏览之Tlist</a>
-</li>
-<li>
-<a href=" linkvim.html">有用的链接 </a>
-</li>
-</ul>
-
-
-<h2 id="toc_1.2">2 软件开发</h2>
-
-<h3 id="toc_1.2.1">2.1 android</h3>
-<ul>
-<li>
-<a href="developenv.html">开发环境</a>
-</li>
-<li>
-<a href="secrity.html">权限管理</a>
-</li>
-<li>
-<a href="UIframe.html">界面运行框架</a>
-</li>
-<li>
-<a href=" JNI_anroid.html">JNI开发 </a>
-</li>
-<li>
-<a href=" systemdev.html">系统层开发 </a>
-</li>
-<li>
-<a href="hackandroid.html">手机应用破解</a>
-</li>
-</ul>
+<h2 id="toc_1.3">3 应用api层</h2>
 
 </body>
 </html>

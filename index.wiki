@@ -4,20 +4,28 @@
 这里是CorlyCao的blog，使用vim+wiki+github搭建而成。生命短暂，思想如烟。这里记录一些点点滴滴，希望你喜欢。
 
 ==时间管理与知识管理==
-===1、工具===
+
+
+===知识管理===
 [[vimwiki|使用vimwiki进行知识管理]]
 
+
+===VIM===
+* [[basicoper|基本操作]]包括移动、选择、复制
+* [[NERD-Tree|文件浏览之NERD-Tree]]
+* [[Tlist|Tag浏览之Tlist]]
+* [[ linkvim|有用的链接 ]]
+
+
 ==软件开发==
+
 ===android===
-====基本知识====
-[[developenv|开发环境]]
-[[secrity|权限管理]]
+* [[developenv|开发环境]]
+* [[secrity|权限管理]]
+* [[UIframe|界面运行框架]]
+* [[ JNI_anroid|JNI开发 ]]
+* [[ systemdev|系统层开发 ]]
+* [[hackandroid|手机应用破解]]
 
-====应用层开发====
-[[UIframe|界面运行框架]]
-
-====JNI开发====
-
-====系统层开发====
 
 

@@ -72,12 +72,11 @@ def hello(world):
 ===页面===
 打开首页 \ww \wt；跳转 shift|control + enter；返回 BackSpace
 
-
 创建一个新页面通过wikiword或者双括号；\wd \wr
 
 ===折叠===
-zr zm
 
+打开关闭zr zm
 
 todo: 快捷键更换
 

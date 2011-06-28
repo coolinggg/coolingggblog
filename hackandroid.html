@@ -1,0 +1,162 @@
+<html>
+<head>
+
+<link type="text/css" rel="stylesheet" href="syntaxhighlighter/styles/shCore.css" />
+<link type="text/css" rel="stylesheet" href="syntaxhighlighter/styles/shThemeRDark.css" />
+<script type="text/javascript" src="syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushPython.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushBash.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushCpp.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushXml.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushJava.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushBash.js"></script>
+
+<script type="text/javascript">
+  SyntaxHighlighter.all()
+</script> 
+<link rel="Stylesheet" type="text/css" href="style.css" />
+<title>hackandroid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=cp936" />
+</head>
+<body>
+
+
+<p>
+早在PC时代，就有了破解技术，类似汉化、破解注册码、插件，曾经在PC机初期作为很多软件先期小公司积累原始资本的基本手段。
+如今在android手机上又面临着同样的状况，有大量用户的软件需求，又有大量的插件需求，应该说是手机的蓝海时代。
+</p>
+
+<h1 id="toc_1"> 手机应用破解</h1>
+<p>
+工具很多，但大多数情况还需要配合使用。对于hack源码级别的可以通过java源码熟悉大概流程后，使用apktool工具解包打包。
+<h2 id="toc_1.1">1 一揽子方案</h2>
+</p>
+<ul>
+<li>
+使用apktool可以将代码、图片、xml、语言资源一起生成, <a href="http://code.google.com/p/android-apktool">apktool</a>
+</li>
+</ul>
+<blockquote>
+apktool d c:\.apk c:\
+apktool b c:\
+</blockquote>
+
+<h2 id="toc_1.2">2 apk解包</h2>
+<ul>
+<li>
+首先apk实际上就是一个压缩包，解压后就是四个文件，包括：
+</li>
+</ul>
+<blockquote>
+*.dex<br />
+AndroidManifest.xml<br />
+res <br />
+META-INF包含签名文件<br />
+resouces.arsc资源说明文件<br />
+</blockquote>
+
+<h2 id="toc_1.3">3 dex到Java</h2>
+<ul>
+<li>
+第一个思路，生成Java源码，<a href="http://code.google.com/p/dex2jar/downloads/list">dex2jar</a>, <a href="http://java.decompiler.free.fr/?q=jdgui">jdgui</a>
+</li>
+</ul>
+<blockquote>
+dex2jar classes.dex =&gt; 生成classes.dex.dex2jar.jar <br />
+通过jd-gui打开classes.dex.dex2jar.jar可以看到源码
+</blockquote>
+    
+
+<ul>
+<li>
+还有一个思路，生成的smali格式文件, <a href="http://code.google.com/p/smali/downloads/list">smali</a>
+</li>
+</ul>
+<blockquote>
+baksmali.jar -o classout classes.ex
+</blockquote>
+
+<ul>
+<li>
+还有第三种思路，生成ddx格式文件<a href="http://sourceforge.net/projects/dedexer/files">Dedexer</a>
+</li>
+</ul>
+<blockquote>
+ddx.jar -o -D -r -d &lt;dir&gt; &lt;dex file&gt;
+</blockquote>
+
+<ul>
+<li>
+第四种 <a href="http://code.google.com/p/smali/downloads/list">smali</a>
+</li>
+</ul>
+<blockquote>
+smali.jar F:\tool\weibo -o F:\tool\_classes.dex
+</blockquote>
+
+<h2 id="toc_1.4">4 AndroidManifest.xml到txt</h2>
+<ul>
+<li>
+该文件通过如下方法解密, <a href="http://code.google.com/p/android4me/downloads/list">AXMLPrinter2</a>
+</li>
+</ul>
+<blockquote>
+AXMLPrinter2.jar AndroidManifest.xml &gt; AndoridManifest.txt
+</blockquote>
+
+<h2 id="toc_1.5">5 resources.arsc解析</h2>
+<ul>
+<li>
+通过[AndroidResEdit]打开resources.arsc文件
+</li>
+</ul>
+
+<h2 id="toc_1.6">6 资源文件解析</h2>
+<ul>
+<li>
+直接打开\res\drawable进行图片替换
+</li>
+</ul>
+
+<h2 id="toc_1.7">7 apk打包</h2>
+
+<h2 id="toc_1.8">8 apk签名</h2>
+<ul>
+<li>
+删除META-INF文件夹中的除MANIFEST.MF外的两个文件
+</li>
+<li>
+使用工具签名新的apk Auto-Sign
+</li>
+</ul>
+
+
+<h2 id="toc_1.9">9 有用的链接</h2>
+<p>
+<a href="http://jserv.blogspot.com/2010/05/android.html">http://jserv.blogspot.com/2010/05/android.html</a>
+<a href="http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html">http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html</a>
+<a href="http://code.google.com/p/smali/">http://code.google.com/p/smali/</a> 
+</p>
+
+<pre  class = "brush:bash">
+$ cd res
+$ for file in */*.xml; do java -jar AXMLPrinter2.jar $file &gt; temp; echo $file; mv temp $file -f; done
+</pre>
+<h1 id="toc_2"> 反破解</h1>
+<ul>
+<li>
+核心代码使用so动态库实现，但Java代码依然存在风险
+</li>
+<li>
+在线签名下载，但Java代码依然存在风险
+</li>
+<li>
+代码混淆，反混淆技术很强
+</li>
+<li>
+混合使用
+</li>
+</ul>
+
+</body>
+</html>
