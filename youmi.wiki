@@ -1,0 +1,105 @@
+%title=有米网广告插入方式
+
+比较主要的几款广告插件，[http://www.wiyun.com 微云]、[http://www.youmi.net/ 有米]、[http://www.wooboo.com.cn wooboo]
+=有米网广告插入方式=
+
+* 增加有米网的lib youmiad-android.jar
+
+* 增加权限，可以看到获取了网络、手机型号、GPRS、SD卡、GPS权限
+
+{{{class ="brush:xml"
+<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+ }}}
+* 修改Java代码，初始化 AppID、AppStart、广告间隔时间、测试模式
+
+ AdManager.init("您的应用发布Id", "您的应用密码", 30, false,"用于标识您的应用的版本号，如1.2"); 
+
+这几个参数应该都是从有米网申请过来，用来唯一标示标识一个应用的
+
+* 将有米插入界面——配置文件方式
+
+1、res/values 文件夹中添加 attrs.xml
+
+{{{class="brush:xml"
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <declare-styleable name="net.youmi.android.AdView">                
+  <!--广告条的背景颜色(取值范围为#000000----#ffffff) -->        
+  <attr name="backgroundColor" format="color" />                      
+  <!--广告条的字体颜色(取值范围为#000000----#ffffff) -->
+  <attr name="textColor" format="color" />
+  <!--广告条的背景透明度，默认为 255，设置范围0-255 -->
+  <attr name="backgroundTransparent"  format="integer"/>
+ </declare-styleable>
+</resources>
+
+}}}
+2、Layout文件中的布局文件增加AdView
+
+{{{class ="brush:xml"
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 需要设置命名空间 :umadsdk -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:umadsdk="http://schemas.android.com/apk/res/com.youmi"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">      
+   <net.youmi.android.AdView
+    android:id="@+id/adView"  
+    android:layout_width="fill_parent"  
+    android:layout_height="wrap_content"
+    umadsdk:textColor="#ffffff" 
+    umadsdk:backgroundTransparent="155"
+    umadsdk:backgroundColor="#808080"/> 
+</LinearLayout>
+}}}
+
+* 将有米插入界面——代码方式
+
+{{{class="brush:java"
+
+public class CodeSample extends Activity{
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    LinearLayout layout=new LinearLayout(this);
+    layout.setOrientation(LinearLayout.VERTICAL);
+
+    //初始化广告控件
+    AdView adView = new AdView(this);
+    LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+    layout.addView(adView, params);
+    setContentView(layout);
+  }
+}
+
+}}}
+
+* 将有米插入界面——悬浮布局
+
+{{{class="brush:java"
+
+public class SuspensoidSample extends Activity implements AdListener{
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    // TODO Auto-generated method stub
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main); 
+
+    //初始化广告条
+    AdView adView = new AdView(this,Color.GRAY, Color.WHITE, 100);
+
+    //使用setPadding设置广告条的位置
+    adView.setPadding(0, 120, 0, 0);
+
+    LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+    addContentView(adView, params); 
+  }
+}
+
+}}}

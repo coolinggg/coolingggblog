@@ -26,6 +26,16 @@
 * [[ JNI_anroid|JNI开发 ]]
 * [[ systemdev|系统层开发 ]]
 * [[hackandroid|手机应用破解]]
+* [[adb|adb使用]]
+
+==互联网==
+===手机应用===
+* [[youmi|有米网广告插入方式]
+
+==web开发==
+* [[webskill|技巧]]
+
+
 
 
 

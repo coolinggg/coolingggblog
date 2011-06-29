@@ -1,0 +1,66 @@
+%title=web开发技巧
+
+=web开发技巧=
+
+* 唯一流水号生成
+
+/** 
+ * Manages sequences of unique ID's that get stored in the database. Database 
+ * support for sequences varies widely; some don't support them at all. So, 
+ * we handle unique ID generation with a combination VM/database solution.<p> 
+ * 
+ * A special table in the database doles out blocks of unique ID's to each 
+ * virtual machine that interacts with Jive. This has the following consequences: 
+ * <ul> 
+ *  <li>There is no need to go to the database every time we want a new unique 
+ *      id. 
+ *  <li>Multiple app servers can interact with the same db without consequences 
+ *      in terms of id's. 
+ *  <li>The order of unique id's may not correspond to creation date 
+ *      (as they once did);. 
+ * </ul> 
+ */ 
+
+* 事物
+
+在企业应用中，事务处理是一个很重要的问题，本文阐述了事务处理的相关概念，分析了数据库级别的事务并发时产生的问题和相对应的隔离级别，最后简单谈谈Hibernate对于事务处理的方法。
+1.事务(transaction)
+事务被认为是一系列操作的集合，是一个工作单元(unit of work)，事务的处理的结果有两个一个是commit，令一个是roll back,事务有ACID特性(atomicity,consistency,isolation, durability)。atomicity是说明事务处理过程中不能够被打断;consistency是指事务所操作的数据是一个一致性的集合，也就是这些数据对于其他并发进行的事务是隐藏的;isolation是指两个并发进行的事务相互之间是不可见的，也就是互不影响;durability是指事务处理的结果将被持久化。
+在分析事务处理时，要将原来的单个sql的commit,rollback和对事务的commit，roolback区分开来，一个事务可能是由多个sql操作所组成的。
+
+2.并发事务执行时引起的问题
+(1)lost update: A和B事务并发执行，A事务执行update后，提交;B事务在A事务update后，B事务结束前也做了对同样数据的update操作，然后rollback，则两次提交操作都丢失了。
+(2)dirty read:A和B事务并发执行，B事务执行update后，A事务select B事务没有提交的数据，B事务roolback，则A事务得到的数据不是数据库中的真实数据。也就是dirty data(和数据库中不一致的数据)
+(3)unrepeatable read:A和B事务并发执行，A事务select数据，然后B事务update该数据，A再次select该数据时，发现该数据变化了。(second lost updates:是unrepeatable read的一种特殊情况，即A事务update数据，然后B事务update数据，A事务select发现自己update的数据变了，该问题为什么不划分到第一类问题，是和事务的隔离级别相关的，也就是A的select执行时允许了并发的B的update的执行，隔离级别3能够解决该问题，而隔离级别1不能解决该问题)
+(4)phantom read:A和B事务并发执行，A事务select数据，B事务insert或者update数据，A事务再次select发现结果集中有以前没有的数据或者以前有的数据消失了。
+
+3.事务的隔离级别
+在企业应用中，事务往往存在于并发执行的环境当中，那么如果做到并发事务之间完全的isolation，做到对于以上四大问题完全解决，那么势必会影响程序的performance和scalability,因此减弱这种完全的isolation，而带来的就是performance和scalability的提高。因此事务的隔离级别根据以前的四大问题有四种。
+(1)read uncommitted isolation:不允许(1)问题存在，允许(2)问题存在。写事务执行时不允许同时有其他的写事务并发执行。
+(2)read committed isolation:不允许(2)问题存在，允许(3)问题存在。读事务允许其他事务并发执行，没有提交的写事务执行时不允许同时有其他并发事务执行。
+(3)repeatable read isolation:不允许(3)问题存在，允许(4)问题存在。读事务不允许写事务并发执行，没有提交的写事务执行时不允许同时有其他并发事务执行。
+(4)serializable:完全解决问题。
+
+4.Hibernate的折衷解决方案
+一般的应用作隔离级别时，往往采用(2),(3)两种，(1),(4)两种前者轻后者重，但是Hibernate为了提高performance和scalability，在数据库一层中采用的是(2)的隔离级别，然后在程序中进行控制，从而实现了(3)的隔离级别，因此提高了企业应用的事务处理效率。当然Hibernate对于数据库一层的隔离级别也可以显示指定。
+Hibernate在程序中的控制方法有:version number, timestamp,对于遗留database也有optimistic-lock，而version number有时不能解决特殊的事务并发引起来的(3)问题，那么就需要针对特殊情况进行细粒度的事务控制，可以看一下LOCKMODE。
+先写这些，如果大家感兴趣，我可以再把Hibernate具体的解决方案总结归纳。
+
+
+* 无锁
+
+库存表带个timestamp，进调拨画面把当时的timestamp带过来，保存，提交时update语句带where timestamp = 当时的值。
+依靠DB自身的update屏蔽并发冲突，省心省力，不用额外的lock 
+
+
+* 异步
+
+* NIO与长连接
+
+
+* tomcat中建立独立线程
+
+似乎应该开独立进程处理这事
+
+
+

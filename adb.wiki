@@ -1,0 +1,22 @@
+%title=adb使用指南
+
+adb是用于远程调试android模拟器以及真实设备的工具，类似unix上的串口。
+
+=adb使用指南=
+
+* 安装应用 adb install *.apk 
+* 卸载应用 adb unistall -k 软件名 ( k表示保留配置信息 )
+
+* 进入shell 
+  
+    adb shell <br />
+    adb shell command <br />
+    <br />
+    cd /data/app/ <br />
+    rm app.apk <br />
+
+* 复制文件到设备 adb push test.txt /tmp/test.txt
+* 复制文件到本地 adb pull /tmp/test.txt
+* 取得当前设备实例 adb devices
+* 进入数据库 sqllite3
+

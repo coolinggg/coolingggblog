@@ -1,0 +1,159 @@
+<html>
+<head>
+
+<link type="text/css" rel="stylesheet" href="syntaxhighlighter/styles/shCore.css" />
+<link type="text/css" rel="stylesheet" href="syntaxhighlighter/styles/shThemeRDark.css" />
+<script type="text/javascript" src="syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushPython.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushBash.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushCpp.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushXml.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushJava.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushBash.js"></script>
+
+<script type="text/javascript">
+  SyntaxHighlighter.all()
+</script> 
+<link rel="Stylesheet" type="text/css" href="style.css" />
+<title>youmi</title>
+<meta http-equiv="Content-Type" content="text/html; charset=cp936" />
+</head>
+<body>
+
+
+<p>
+比较主要的几款广告插件，<a href="http://www.wiyun.com">微云</a>、<a href="http://www.youmi.net/">有米</a>、<a href="http://www.wooboo.com.cn">wooboo</a>
+<h1 id="toc_1"> 有米网广告插入方式</h1>
+</p>
+
+<ul>
+<li>
+增加有米网的lib youmiad-android.jar
+</li>
+</ul>
+
+<ul>
+<li>
+增加权限，可以看到获取了网络、手机型号、GPRS、SD卡、GPS权限
+</li>
+</ul>
+
+<pre class ="brush:xml">
+&lt;uses-permission android:name="android.permission.INTERNET"&gt;&lt;/uses-permission&gt;
+&lt;uses-permission android:name="android.permission.READ_PHONE_STATE"/&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"&gt;&lt;/uses-permission&gt;
+&lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"&gt;&lt;/uses-permission&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/&gt;
+</pre>
+<ul>
+<li>
+修改Java代码，初始化 AppID、AppStart、广告间隔时间、测试模式
+</li>
+</ul>
+
+<p>
+ AdManager.init("您的应用发布Id", "您的应用密码", 30, false,"用于标识您的应用的版本号，如1.2"); 
+</p>
+
+<p>
+这几个参数应该都是从有米网申请过来，用来唯一标示标识一个应用的
+</p>
+
+<ul>
+<li>
+将有米插入界面——配置文件方式
+</li>
+</ul>
+
+<p>
+1、res/values 文件夹中添加 attrs.xml
+</p>
+
+<pre class="brush:xml">
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+ &lt;declare-styleable name="net.youmi.android.AdView"&gt;                
+  &lt;attr name="backgroundColor" format="color" /&gt;                      
+  &lt;attr name="textColor" format="color" /&gt;
+  &lt;attr name="backgroundTransparent"  format="integer"/&gt;
+ &lt;/declare-styleable&gt;
+&lt;/resources&gt;
+
+</pre>
+<p>
+2、Layout文件中的布局文件增加AdView
+</p>
+
+<pre class ="brush:xml">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:umadsdk="http://schemas.android.com/apk/res/com.youmi"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"&gt;      
+   &lt;net.youmi.android.AdView
+    android:id="@+id/adView"  
+    android:layout_width="fill_parent"  
+    android:layout_height="wrap_content"
+    umadsdk:textColor="#ffffff" 
+    umadsdk:backgroundTransparent="155"
+    umadsdk:backgroundColor="#808080"/&gt; 
+&lt;/LinearLayout&gt;
+</pre>
+
+<ul>
+<li>
+将有米插入界面——代码方式
+</li>
+</ul>
+
+<pre class="brush:java">
+
+public class CodeSample extends Activity{
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    LinearLayout layout=new LinearLayout(this);
+    layout.setOrientation(LinearLayout.VERTICAL);
+
+    //初始化广告控件
+    AdView adView = new AdView(this);
+    LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+    layout.addView(adView, params);
+    setContentView(layout);
+  }
+}
+
+</pre>
+
+<ul>
+<li>
+将有米插入界面——悬浮布局
+</li>
+</ul>
+
+<pre class="brush:java">
+
+public class SuspensoidSample extends Activity implements AdListener{
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    // TODO Auto-generated method stub
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main); 
+
+    //初始化广告条
+    AdView adView = new AdView(this,Color.GRAY, Color.WHITE, 100);
+
+    //使用setPadding设置广告条的位置
+    adView.setPadding(0, 120, 0, 0);
+
+    LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+    addContentView(adView, params); 
+  }
+}
+
+</pre>
+
+</body>
+</html>
