@@ -1,4 +1,4 @@
-%title=有米网广告插入方式
+%title 有米网广告插入方式
 
 比较主要的几款广告插件，[http://www.wiyun.com 微云]、[http://www.youmi.net/ 有米]、[http://www.wooboo.com.cn wooboo]
 =有米网广告插入方式=

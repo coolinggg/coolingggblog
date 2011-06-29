@@ -1,4 +1,4 @@
-%title=web开发技巧
+%title web开发技巧
 
 =web开发技巧=
 
