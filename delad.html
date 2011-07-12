@@ -101,15 +101,14 @@ AdMob已经被谷歌收购，如果AdMob的广告不多，有时会直接显示G
 &lt;/LinearLayout&gt;
 </pre>
 
-<p>
-==删除大法之代码删除==
-</p>
+<h2 id="toc_1.4">4 删除大法之smali文件</h2>
 
 <p>
 有些应用作者是通过代码创建布局的方式嵌入广告的，不过本人认为这不是非常方便，影响程序的可扩展性。
 我们按照<a href="hackandroid.html">反编译android应用</a>的方法，利用apktool工具得到所有的smali文件，找到对应的创建Layout的代码位置，
 例如有米网的代码如下：
 </p>
+
 <pre class="brush:java">
 
   /** Called when the activity is first created. */
@@ -127,7 +126,7 @@ AdMob已经被谷歌收购，如果AdMob的广告不多，有时会直接显示G
 
 </pre>
 
-<h2 id="toc_1.4">4 删除大法之修改广告的服务器通信地址</h2>
+<h2 id="toc_1.5">5 删除大法之修改广告的服务器通信地址</h2>
 
 <p>
 有些应用的代码反编译后，面目全非，很难找到layout的入口，因此我们可以简单的将其广告的服务地址改为一个不可达的地址，

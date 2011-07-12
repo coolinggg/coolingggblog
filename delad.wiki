@@ -49,13 +49,14 @@ AdMob已经被谷歌收购，如果AdMob的广告不多，有时会直接显示G
     umadsdk:backgroundTransparent="155"
     umadsdk:backgroundColor="#808080"/> 
 </LinearLayout>
- }}}
+}}}
 
-==删除大法之代码删除==
+==删除大法之smali文件==
 
 有些应用作者是通过代码创建布局的方式嵌入广告的，不过本人认为这不是非常方便，影响程序的可扩展性。
 我们按照[[hackandroid.html|反编译android应用]]的方法，利用apktool工具得到所有的smali文件，找到对应的创建Layout的代码位置，
 例如有米网的代码如下：
+
 {{{class="brush:java"
 
   /** Called when the activity is first created. */
