@@ -6,4 +6,5 @@
 
 
 * 显示上一条或几条错误信息 :echo errormsg :messages
+* verbose map 
 

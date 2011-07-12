@@ -27,13 +27,22 @@
 * [[ systemdev|系统层开发 ]]
 * [[hackandroid|手机应用破解]]
 * [[adb|adb使用]]
+* [[androidui|android界面指南]]
 
 ==互联网==
 ===手机应用===
 * [[youmi|有米网广告插入方式]]
+* [[delad|删除APP中的广告]]
 
 ==web开发==
 * [[webskill|技巧]]
+==[[Geek|Geek]]
+
+==工具==
+* VS 2005
+* SourceInsight
+
+==技术==
 
 
 

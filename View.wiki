@@ -1,0 +1,6 @@
+%title View
+
+=View=
+
+* android:gravity
+*

@@ -1,0 +1,184 @@
+<html>
+<head>
+
+<link type="text/css" rel="stylesheet" href="syntaxhighlighter/styles/shCore.css" />
+<link type="text/css" rel="stylesheet" href="syntaxhighlighter/styles/shThemeRDark.css" />
+<script type="text/javascript" src="syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushPython.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushBash.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushCpp.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushXml.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushJava.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushBash.js"></script>
+
+<script type="text/javascript">
+  SyntaxHighlighter.all()
+</script> 
+<link rel="Stylesheet" type="text/css" href="style.css" />
+<title>删除APP中嵌入的广告</title>
+<meta http-equiv="Content-Type" content="text/html; charset=cp936" />
+</head>
+<body>
+
+
+<p>
+本文介绍删除APP中嵌入的广告的几种方法，当前国内支持的广告商包括有米, 微云, 多盟, 亿动智道, AdMob, MM, 架势, 哇棒, 易传媒，Vpon, 安沃(Adwo), airAD, AdTOUCH等10几家广告厂商。分析其嵌入方法，无外乎布局配置文件插入、布局代码插入、后台弹出式插入(桌面弹出或过程弹出)。
+</p>
+
+<h1 id="toc_1"> 删除APP中嵌入的广告</h1>
+
+<h2 id="toc_1.1">1 广告厂商介绍</h2>
+
+<p>
+所谓知己知彼，百战不殆。我们首先分析一下几个友商的背景。
+</p>
+
+<ul>
+<li>
+AdMob
+</li>
+</ul>
+
+<p>
+AdMob已经被谷歌收购，如果AdMob的广告不多，有时会直接显示Google的广告。最近据说很多人被封号，点击率不要太高，超过3%就很危险了。我有一个应用一直点击率很高，正考虑修改一下布局，避免误点击。毕竟已经提现了几百刀，还真不舍得被封号。每个点击1-3美分不等，欧美点击比较值钱，亚洲的点击就不行了。针对国外用户，首选依然是AdMob。据说，国外现在有个Millennial，没试过，就不做评论了。
+</p>
+
+<ul>
+<li>
+有米
+</li>
+</ul>
+
+<p>
+针对国内用户，我一直用有米，中规中矩，每个点击大概0.1元。已经提现了几百块。比较稳定，前段时间一个应用被hiapk推荐了，几天下载了10000多，有米的收入就很不错。可惜只推荐了几天，之后下载量就直线下降了。如果有米保持稳定，以后也打算接着用了。还是希望有米能有些创新。 
+</p>
+
+<ul>
+<li>
+架势
+</li>
+<li>
+哇棒
+</li>
+<li>
+微云
+</li>
+</ul>
+
+
+<h2 id="toc_1.2">2 旁门左道</h2>
+
+<p>
+对于普通玩家，可以通过一些简单的方法，去除或者制止广告的正常运行，截断其与外部的联系。
+</p>
+
+<p>
+例如通过AdFree可以截断广告与外部联系的IP地址，或者修改手机的hosts文件。
+</p>
+
+<h2 id="toc_1.3">3 删除大法之布局文件</h2>
+
+<p>
+我们按照<a href="hackandroid.html">反编译android应用</a>的方法，利用apktool工具得到所有的资源文件，
+大部分软件广告商都是通过布局方式插入广告，首先我们要找到现实广告的layout/*.xml的布局文件，打开，找到相应的广告插件位置，删除之即可。例如
+有米的插件如下：
+</p>
+
+<pre class = "brush:xml">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:umadsdk="http://schemas.android.com/apk/res/com.youmi"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"&gt;      
+   &lt;net.youmi.android.AdView
+    android:id="@+id/adView"  
+    android:layout_width="fill_parent"  
+    android:layout_height="wrap_content"
+    umadsdk:textColor="#ffffff" 
+    umadsdk:backgroundTransparent="155"
+    umadsdk:backgroundColor="#808080"/&gt; 
+&lt;/LinearLayout&gt;
+</pre>
+
+<p>
+==删除大法之代码删除==
+</p>
+
+<p>
+有些应用作者是通过代码创建布局的方式嵌入广告的，不过本人认为这不是非常方便，影响程序的可扩展性。
+我们按照<a href="hackandroid.html">反编译android应用</a>的方法，利用apktool工具得到所有的smali文件，找到对应的创建Layout的代码位置，
+例如有米网的代码如下：
+</p>
+<pre class="brush:java">
+
+  /** Called when the activity is first created. */
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    LinearLayout layout=new LinearLayout(this);
+    layout.setOrientation(LinearLayout.VERTICAL);
+
+    //初始化广告控件
+    AdView adView = new AdView(this);
+    LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+    layout.addView(adView, params);
+    setContentView(layout);
+
+</pre>
+
+<h2 id="toc_1.4">4 删除大法之修改广告的服务器通信地址</h2>
+
+<p>
+有些应用的代码反编译后，面目全非，很难找到layout的入口，因此我们可以简单的将其广告的服务地址改为一个不可达的地址，
+一般的广告商都是等广告完全下载后才进行广告展示的，因此可以利用这一点劫持广告与外部的通信。
+</p>
+
+<p>
+例如google的广告插入方式就很诡异，下面以这个为例介绍一下.
+</p>
+
+<ul>
+<li>
+通过前面提到的布局文件搜索googleadview，还是从代码中查找googleadview都无法搜索到，因此只能确定google与外界的通信
+</li>
+</ul>
+<p>
+地址，确定google与外界的地址，可以通过抓包的方式，看http链接的情况。
+</p>
+
+<p>
+<a href="cap.png"><img src="cap.png" /></a>
+</p>
+
+<ul>
+<li>
+首先还是通过apktool将其解包，在smali文件夹内搜索所有文件找到包含"pagead"字符，找到后替换成为一个不可达地址。
+</li>
+</ul>
+
+<pre class = "brush:java">
+    const-string v3, "http://googleads.g.doubleclick.net/aclk"
+    invoke-virtual {v2, v3}, Ljava/lang/String;-&gt;startsWith(Ljava/lang/String;)Z
+    move-result v2
+    if-nez v2, :cond_2
+    invoke-virtual {v1}, Ljava/lang/String;-&gt;toLowerCase()Ljava/lang/String;
+    move-result-object v2
+    const-string v3, "http://www.googleadservices.com/pagead/aclk"
+    invoke-virtual {v2, v3}, Ljava/lang/String;-&gt;startsWith(Ljava/lang/String;)Z
+    move-result v2
+    if-eqz v2, :cond_8
+    :cond_2
+    invoke-virtual {v1}, Ljava/lang/String;-&gt;toLowerCase()Ljava/lang/String;
+    move-result-object v2
+    const-string v3, "http://googleads.g.doubleclick.net/aclk"
+</pre>
+
+<ul>
+<li>
+最后把修改后的smali文件压缩回去，重新签名即可。
+</li>
+</ul>
+
+</body>
+</html>

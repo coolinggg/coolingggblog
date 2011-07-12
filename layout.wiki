@@ -1,0 +1,23 @@
+%title layout指南
+
+=layout指南=
+
+==FrameLayout==
+
+==LinearLayout==
+* width
+* height
+* weight
+*
+
+
+
+==RelativeLayout==
+
+==TableLayout==
+* TableRow
+* android:layout_column
+
+
+
+
